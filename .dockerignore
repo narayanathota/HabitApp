@@ -1,0 +1,26 @@
+# Build output (rebuilt inside the image)
+target/
+
+# Version control and CI files
+.git
+.gitignore
+.gitattributes
+Jenkinsfile
+
+# IDE / OS files
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
+
+# Secrets and local config - never send these into the build context
+.env
+.env.*
+*.pem
+*.key
+
+# Docs and local-only files
+*.md
+Dockerfile
+.dockerignore

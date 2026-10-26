@@ -1,0 +1,10 @@
+target/
+.env
+.env.*
+*.pem
+*.key
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
