@@ -14,7 +14,7 @@ Jenkins never runs `kubectl` or `helm install`; it only commits a new image tag 
 ```
 GitHub (this repo)
    -> Jenkins -> Maven build -> Unit tests -> SonarQube + Quality Gate
-   -> Docker build -> Docker Hub (narayanathota/habitapp:<build>-<sha>)
+   -> Docker build -> Docker Hub (narayanababut/habitapp:<build>-<sha>)
    -> commit new image.tag to the config repo
 HabitApp-config repo (GitOps)
    -> Argo CD detects the commit -> syncs -> Kubernetes rolling update
@@ -48,8 +48,8 @@ repo, so it can never re-trigger this repo's pipeline (no build loop).
 - No credentials in the image; `.dockerignore` keeps `.env`, keys and `target/` out of the build context.
 
 ```bash
-docker build -t narayanathota/habitapp:local .
-docker run -p 8080:8080 narayanathota/habitapp:local
+docker build -t narayanababut/habitapp:local .
+docker run -p 8080:8080 narayanababut/habitapp:local
 curl http://localhost:8080/actuator/health        # {"status":"UP",...}
 ```
 
@@ -63,7 +63,7 @@ curl http://localhost:8080/actuator/health        # {"status":"UP",...}
 | 4 | SonarQube Analysis | `mvn sonar:sonar` through `withSonarQubeEnv` |
 | 5 | Quality Gate | `waitForQualityGate abortPipeline: true` (stops the pipeline on failure) |
 | 6 | Image Versioning | tag = `<build-number>-<git-sha>` |
-| 7 | Docker Build | builds `narayanathota/habitapp:<tag>` |
+| 7 | Docker Build | builds `narayanababut/habitapp:<tag>` |
 | 8 | Push Image | `docker push` (main branch only) |
 | 9 | Update Helm Configuration | clones the config repo, changes only the `image.tag` line in `values.yaml` |
 | 10 | Commit Deployment Change | commits and pushes to the config repo |
@@ -129,7 +129,7 @@ All data is stored in memory. With several replicas each pod has its own data, a
 ### Application URL and evidence
 
 - Application URL: _to be added after the AWS deployment_
-- Container registry: https://hub.docker.com/r/narayanathota/habitapp
+- Container registry: https://hub.docker.com/r/narayanababut/habitapp
 - Screenshots: _to be added_ (Maven build, SonarQube Quality Gate, Jenkins stage view, Docker Hub tags,
   Argo CD Synced/Healthy, rolling update, rollback, monitoring).
 

@@ -19,7 +19,7 @@ pipeline {
 
     environment {
         // Docker Hub repo for the image, and the GitOps config repo that Argo CD watches
-        IMAGE_REPO      = 'narayanathota/habitapp'
+        IMAGE_REPO      = 'narayanababut/habitapp'
         CONFIG_REPO_URL = 'https://github.com/narayanathota/HabitApp-config.git'
         CONFIG_BRANCH   = 'main'
         VALUES_FILE     = 'charts/habitapp/values.yaml'
