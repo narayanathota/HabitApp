@@ -174,7 +174,12 @@ pipeline {
         }
         always {
             // Free disk on the agent
-            sh 'docker rmi "$IMAGE_REPO:$IMAGE_TAG" "$IMAGE_REPO:build-$BUILD_NUMBER" || true'
+            // IMAGE_TAG only exists once the Image Versioning stage has run
+            sh '''
+                if [ -n "${IMAGE_TAG:-}" ]; then
+                    docker rmi "$IMAGE_REPO:$IMAGE_TAG" "$IMAGE_REPO:build-$BUILD_NUMBER" || true
+                fi
+            '''
             cleanWs()
         }
     }
