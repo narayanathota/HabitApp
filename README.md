@@ -128,10 +128,20 @@ All data is stored in memory. With several replicas each pod has its own data, a
 
 ### Application URL and evidence
 
-- Application URL: _to be added after the AWS deployment_
-- Container registry: https://hub.docker.com/r/narayanababut/habitapp
-- Screenshots: _to be added_ (Maven build, SonarQube Quality Gate, Jenkins stage view, Docker Hub tags,
-  Argo CD Synced/Healthy, rolling update, rollback, monitoring).
+- Application URL: http://13.235.80.22/ (health check: http://13.235.80.22/actuator/health).
+  Runs on a single AWS EC2 server (Ubuntu, 8 GiB) with Jenkins, SonarQube, k3s and Argo CD; the
+  Jenkins, SonarQube and Argo CD UIs are restricted to the owner's IP by the security group.
+  The server is temporary and will be shut down after review.
+- Container registry: https://hub.docker.com/r/narayanababut/habitapp (tags `<build>-<commit>`, e.g. `7-408654b`)
+- Config repo (what Argo CD watches): https://github.com/narayanathota/HabitApp-config
+
+**End-to-end proof (build #8):** a one-line UI change was pushed to this repo. Jenkins built, tested,
+scanned (Quality Gate OK), pushed `narayanababut/habitapp:8-d5747b9` and committed the new tag to the
+config repo; Argo CD then rolled it out and the page showed the change. Reverting that config commit
+rolled the app back to `7-408654b`, again through Argo CD, with no manual `kubectl`.
+
+Screenshots are in the evidence document: Maven build, SonarQube Quality Gate, Jenkins stage view,
+Docker Hub tags, config-repo commits, Argo CD Synced/Healthy, rolling update, rollback, monitoring.
 
 ---
 
